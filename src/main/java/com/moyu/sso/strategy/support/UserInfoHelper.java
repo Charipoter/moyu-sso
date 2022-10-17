@@ -1,6 +1,6 @@
 package com.moyu.sso.strategy.support;
 
-import com.moyu.sso.config.SsoCacheProperties;
+import com.moyu.sso.config.SsoProperties;
 import com.moyu.sso.model.SsoUser;
 import com.moyu.sso.strategy.UserInfoStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class UserInfoHelper {
 
     @Autowired
-    private SsoCacheProperties properties;
+    private SsoProperties properties;
 
     private final Map<String, UserInfoStrategy> userInfoStrategyMap = new HashMap<>();
     @Autowired
@@ -41,19 +41,19 @@ public class UserInfoHelper {
     }
 
     public SsoUser getUserInfo(HttpServletRequest request) {
-        return userInfoStrategyMap.get(properties.getType()).getUserInfo(request);
+        return userInfoStrategyMap.get(properties.getCache().getType()).getUserInfo(request);
     }
 
     public String storeUserInfo(SsoUser userToStore, HttpServletRequest request) {
-        return userInfoStrategyMap.get(properties.getType()).storeUserInfo(userToStore, request);
+        return userInfoStrategyMap.get(properties.getCache().getType()).storeUserInfo(userToStore, request);
     }
 
     public void removeUserInfo(HttpServletRequest request) {
-        userInfoStrategyMap.get(properties.getType()).removeUserInfo(request);
+        userInfoStrategyMap.get(properties.getCache().getType()).removeUserInfo(request);
     }
 
     public String getCacheIdIfPresent(HttpServletRequest request) {
-        return userInfoStrategyMap.get(properties.getType()).getCacheIdIfPresent(request);
+        return userInfoStrategyMap.get(properties.getCache().getType()).getCacheIdIfPresent(request);
     }
 
 }

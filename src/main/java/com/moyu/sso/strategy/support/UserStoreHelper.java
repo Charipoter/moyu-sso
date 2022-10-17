@@ -1,6 +1,6 @@
 package com.moyu.sso.strategy.support;
 
-import com.moyu.sso.config.SsoStoreProperties;
+import com.moyu.sso.config.SsoProperties;
 import com.moyu.sso.model.SsoUserTO;
 import com.moyu.sso.strategy.UserStoreStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Map;
 @Component
 public class UserStoreHelper {
     @Autowired
-    private SsoStoreProperties properties;
+    private SsoProperties properties;
     @Autowired
     private List<UserStoreStrategy> userStoreStrategies;
     private final Map<String, UserStoreStrategy> userStrategyMap = new HashMap<>();
@@ -38,7 +38,7 @@ public class UserStoreHelper {
     }
 
     public SsoUserTO findUser(String username, String password) {
-        return userStrategyMap.get(properties.getType()).findUser(username, password);
+        return userStrategyMap.get(properties.getStore().getType()).findUser(username, password);
     }
 
 }
